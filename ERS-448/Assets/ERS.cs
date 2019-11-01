@@ -23,7 +23,7 @@ public class ERS : MonoBehaviour
     public void startGame()
     {
         deck = GenerateDeck();//Generate a deck for play.
-
+        shuffle(deck);
         //output to console to test it
         foreach (string card in deck)
         {
@@ -43,5 +43,19 @@ public class ERS : MonoBehaviour
         }
 
         return newDeck;
+    }
+
+    void shuffle<T>(List<T> deck)
+    {
+        System.Random rng = new System.Random();
+        int count = deck.Count;
+        while(count > 1)
+        {
+            count--;
+            int j = rng.Next(count + 1);  
+            T card = deck[j];  
+            deck[j] = deck[count];  
+            deck[count] = card;
+        }
     }
 }
