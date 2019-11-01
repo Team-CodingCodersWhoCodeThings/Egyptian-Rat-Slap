@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ERS : MonoBehaviour
 {
+    public GameObject cardPrefab;
+    public Sprite[] cardFronts;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
     public static string[] values = new string[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public List<string> deck;
@@ -23,7 +25,7 @@ public class ERS : MonoBehaviour
     public void startGame()
     {
         deck = GenerateDeck();//Generate a deck for play.
-
+        shuffle(deck);
         //output to console to test it
         foreach (string card in deck)
         {
@@ -43,5 +45,19 @@ public class ERS : MonoBehaviour
         }
 
         return newDeck;
+    }
+
+    void shuffle<T>(List<T> deck)
+    {
+        System.Random rng = new System.Random();
+        int count = deck.Count;
+        while(count > 1)
+        {
+            count--;
+            int j = rng.Next(count + 1);  
+            T card = deck[j];  
+            deck[j] = deck[count];  
+            deck[count] = card;
+        }
     }
 }
