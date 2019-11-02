@@ -15,4 +15,17 @@ public class UserInput : MonoBehaviour
     {
         
     }
+
+    void CheckMouseClick()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if(hit)
+            {
+                //hit something, find out what
+            }
+        }
+    }
 }

@@ -29,6 +29,17 @@ public class ERS : MonoBehaviour
     {
         deck = GenerateDeck();//Generate a deck for play.
         shuffle(deck);//shuffle cards
+        for(int i = 0; i < 52; i++)//divide the deck between AI and Player
+        {
+            if(i%2 == 0)
+            {
+                AIDeck.Add(deck[i]);
+            }
+            else
+            {
+                PlayerDeck.Add(deck[i]);
+            }
+        }
         dealCards();
         //output to console to test it
         foreach (string card in AIDeck)
@@ -72,17 +83,6 @@ public class ERS : MonoBehaviour
 
     void dealCards()
     {
-        for(int i = 0; i < 52; i++)//divide the deck between AI and Player
-        {
-            if(i%2 == 0)
-            {
-                AIDeck.Add(deck[i]);
-            }
-            else
-            {
-                PlayerDeck.Add(deck[i]);
-            }
-        }
         float offset = 0;
         foreach (string card in AIDeck)//Create card objects for AI deck
         {
