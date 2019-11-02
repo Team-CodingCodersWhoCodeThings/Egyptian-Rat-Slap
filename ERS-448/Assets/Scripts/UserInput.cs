@@ -29,13 +29,13 @@ public class UserInput : MonoBehaviour
                 if (hit.collider.CompareTag("Deck"))
                 {
                     //clicked deck
-                    print("Deck");
+                    //print("Deck");
                     clickedDeck();
                 }
                 if (hit.collider.CompareTag("Button"))
                 {
                     //clicked button
-                    print("Button");
+                    //print("Button");
                     clickedButton();
                 }
             }
@@ -49,6 +49,6 @@ public class UserInput : MonoBehaviour
 
     void clickedButton()
     {
-        
+        ers.resetBoard();
     }
 }
