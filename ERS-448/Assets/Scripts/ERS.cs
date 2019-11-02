@@ -12,6 +12,7 @@ public class ERS : MonoBehaviour
     public List<string> AIDeck;
     public List<string> PlayerDeck;
     public List<string> pile;
+    public int pileIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -80,21 +81,19 @@ public class ERS : MonoBehaviour
         }
     }
 
-    void dealCards()
+    public void dealCards()
     {
-        float offset = 0;
-        foreach (string card in AIDeck)//Create card objects for AI deck
+        float xoffset = 0.4f;
+        float zoffset = 0.1f;
+        pile.Add(AIDeck[AIDeck.Count - 1]);
+        pile.Add(PlayerDeck[PlayerDeck.Count - 1]);
+        AIDeck.RemoveAt(AIDeck.Count - 1);
+        PlayerDeck.RemoveAt(PlayerDeck.Count - 1);
+        while(pileIndex < pile.Count)
         {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(9, 4, 0 + offset), Quaternion.identity);
-            newCard.name = card;
-            offset = offset + 0.03f;
-        }
-        offset = 0;
-        foreach (string card in PlayerDeck)//Create card objects for Player deck
-        {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(-9, -4, 0 + offset), Quaternion.identity);
-            newCard.name = card;
-            offset = offset + 0.03f;
+            GameObject newCard = Instantiate(cardPrefab, new Vector3(-9  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
+            newCard.name = pile[pileIndex];
+            pileIndex++;
         }
     }
 }
