@@ -12,6 +12,7 @@ public class ERS : MonoBehaviour
     public List<string> AIDeck;
     public List<string> PlayerDeck;
     public List<string> pile;
+    public int pileIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +30,18 @@ public class ERS : MonoBehaviour
     {
         deck = GenerateDeck();//Generate a deck for play.
         shuffle(deck);//shuffle cards
-        dealCards();
-        //output to console to test it
+        for(int i = 0; i < 52; i++)//divide the deck between AI and Player
+        {
+            if(i%2 == 0)
+            {
+                AIDeck.Add(deck[i]);
+            }
+            else
+            {
+                PlayerDeck.Add(deck[i]);
+            }
+        }
+        /**output to console to test it
         foreach (string card in AIDeck)
         {
             print(card + " AI");
@@ -39,7 +50,7 @@ public class ERS : MonoBehaviour
         {
             print(card + " Player");
         }
-        print(AIDeck.Count + " " + PlayerDeck.Count);
+        print(AIDeck.Count + " " + PlayerDeck.Count);**/
     }
 
     public static List<string> GenerateDeck()
@@ -70,8 +81,35 @@ public class ERS : MonoBehaviour
         }
     }
 
-    void dealCards()
+    public void dealCards()
     {
+        float xoffset = 0.4f;
+        float zoffset = 0.1f;
+        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
+        {  
+            pile.Add(PlayerDeck[PlayerDeck.Count - 1]);
+            pile.Add(AIDeck[AIDeck.Count - 1]);
+            AIDeck.RemoveAt(AIDeck.Count - 1);
+            PlayerDeck.RemoveAt(PlayerDeck.Count - 1);
+            while(pileIndex < pile.Count)
+            {
+                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
+                newCard.name = pile[pileIndex];
+                pileIndex++;
+            }
+        }
+    }
+
+    public void resetBoard()
+    {
+        foreach (string card in pile)
+        {
+            Destroy(GameObject.Find(card));
+        }
+        pile.Clear();
+        AIDeck.Clear();
+        PlayerDeck.Clear();
+        shuffle(deck);//shuffle cards
         for(int i = 0; i < 52; i++)//divide the deck between AI and Player
         {
             if(i%2 == 0)
@@ -83,19 +121,16 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        float offset = 0;
-        foreach (string card in AIDeck)//Create card objects for AI deck
+        pileIndex = 0;
+        /** Test ouput for new decks
+        foreach (string card in AIDeck)
         {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(9, 4, 0 + offset), Quaternion.identity);
-            newCard.name = card;
-            offset = offset + 0.03f;
+            print(card + " AI");
         }
-        offset = 0;
-        foreach (string card in PlayerDeck)//Create card objects for Player deck
+        foreach (string card in PlayerDeck)
         {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(-9, -4, 0 + offset), Quaternion.identity);
-            newCard.name = card;
-            offset = offset + 0.03f;
+            print(card + " Player");
         }
+        print(AIDeck.Count + " " + PlayerDeck.Count);**/
     }
 }
