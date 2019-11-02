@@ -40,7 +40,6 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        dealCards();
         //output to console to test it
         foreach (string card in AIDeck)
         {

@@ -13,19 +13,41 @@ public class UserInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        GetMouseClick();
     }
 
-    void CheckMouseClick()
+    void GetMouseClick()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10));
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if(hit)
+            if (hit)
             {
-                //hit something, find out what
+                //Check what was hit
+                if (hit.collider.CompareTag("Deck"))
+                {
+                    //clicked deck
+                    print("Deck");
+                    clickedDeck();
+                }
+                if (hit.collider.CompareTag("Button"))
+                {
+                    //clicked button
+                    print("Button");
+                    clickedButton();
+                }
             }
         }
+    }
+    
+    void clickedDeck()
+    {
+
+    }
+
+    void clickedButton()
+    {
+
     }
 }
