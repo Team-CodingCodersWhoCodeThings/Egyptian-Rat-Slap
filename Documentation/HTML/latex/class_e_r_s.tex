@@ -1,0 +1,131 @@
+\hypertarget{class_e_r_s}{}\doxysection{E\+RS Class Reference}
+\label{class_e_r_s}\index{ERS@{ERS}}
+Inheritance diagram for E\+RS\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_e_r_s}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_e_r_s_adf14c648a2bcbe63ea9ecd4a6d6a02d8}{start\+Game}} ()
+\item 
+void \mbox{\hyperlink{class_e_r_s_a99901a1421a484123ebd77e2452baa84}{deal\+Cards}} ()
+\item 
+void \mbox{\hyperlink{class_e_r_s_a2df6e97553fad0297e4f3e14752e8e29}{reset\+Board}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static List$<$ string $>$ \mbox{\hyperlink{class_e_r_s_a2d3d6ea17deda0cc77cc215cd47d2d5b}{Generate\+Deck}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a76fe5e0cf8ac7d8d44ac555321b258d9}\label{class_e_r_s_a76fe5e0cf8ac7d8d44ac555321b258d9}} 
+Game\+Object {\bfseries card\+Prefab}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a633e7249229b1e884652bd48b9cd67c3}\label{class_e_r_s_a633e7249229b1e884652bd48b9cd67c3}} 
+Sprite\mbox{[}$\,$\mbox{]} {\bfseries card\+Fronts}
+\item 
+\mbox{\Hypertarget{class_e_r_s_ae512670fd3376007866c23cb0e3f0471}\label{class_e_r_s_ae512670fd3376007866c23cb0e3f0471}} 
+List$<$ string $>$ {\bfseries deck}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a9b2e10d24592fbd1ba3a5652dd5d9a7f}\label{class_e_r_s_a9b2e10d24592fbd1ba3a5652dd5d9a7f}} 
+List$<$ string $>$ {\bfseries A\+I\+Deck}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a4c4d2081f7654983fb42f8923128a5cf}\label{class_e_r_s_a4c4d2081f7654983fb42f8923128a5cf}} 
+List$<$ string $>$ {\bfseries Player\+Deck}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a26e064d58da9b29caa001d4a254396eb}\label{class_e_r_s_a26e064d58da9b29caa001d4a254396eb}} 
+List$<$ string $>$ {\bfseries pile}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a6c9f84f211edbda955801c353798d1b3}\label{class_e_r_s_a6c9f84f211edbda955801c353798d1b3}} 
+int {\bfseries pile\+Index}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a00c64e3c387eecc34fd4d51ff968b117}\label{class_e_r_s_a00c64e3c387eecc34fd4d51ff968b117}} 
+static string\mbox{[}$\,$\mbox{]} {\bfseries suits} = new string\mbox{[}$\,$\mbox{]} \{\char`\"{}C\char`\"{}, \char`\"{}D\char`\"{}, \char`\"{}H\char`\"{}, \char`\"{}S\char`\"{}\}
+\item 
+\mbox{\Hypertarget{class_e_r_s_a47f89122c47f9a867a5d269b05df1ad2}\label{class_e_r_s_a47f89122c47f9a867a5d269b05df1ad2}} 
+static string\mbox{[}$\,$\mbox{]} {\bfseries values} = new string\mbox{[}$\,$\mbox{]} \{\char`\"{}A\char`\"{}, \char`\"{}2\char`\"{}, \char`\"{}3\char`\"{}, \char`\"{}4\char`\"{}, \char`\"{}5\char`\"{}, \char`\"{}6\char`\"{}, \char`\"{}7\char`\"{}, \char`\"{}8\char`\"{}, \char`\"{}9\char`\"{}, \char`\"{}10\char`\"{}, \char`\"{}J\char`\"{}, \char`\"{}Q\char`\"{}, \char`\"{}K\char`\"{}\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_e_r_s_a99901a1421a484123ebd77e2452baa84}\label{class_e_r_s_a99901a1421a484123ebd77e2452baa84}} 
+\index{ERS@{ERS}!dealCards@{dealCards}}
+\index{dealCards@{dealCards}!ERS@{ERS}}
+\doxysubsubsection{\texorpdfstring{dealCards()}{dealCards()}}
+{\footnotesize\ttfamily void E\+R\+S.\+deal\+Cards (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyPrecond}{Precondition}
+game is ran. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+adds cards and displays them in pile. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_e_r_s_a2d3d6ea17deda0cc77cc215cd47d2d5b}\label{class_e_r_s_a2d3d6ea17deda0cc77cc215cd47d2d5b}} 
+\index{ERS@{ERS}!GenerateDeck@{GenerateDeck}}
+\index{GenerateDeck@{GenerateDeck}!ERS@{ERS}}
+\doxysubsubsection{\texorpdfstring{GenerateDeck()}{GenerateDeck()}}
+{\footnotesize\ttfamily static List$<$string$>$ E\+R\+S.\+Generate\+Deck (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+\begin{DoxyPrecond}{Precondition}
+game is ran. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+creates deck for all suits and values combos. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+create list.
+
+use nested loop to populate new\+Deck with all 52 cards in format suit and value, ex. \char`\"{}\+S2\char`\"{}.\mbox{\Hypertarget{class_e_r_s_a2df6e97553fad0297e4f3e14752e8e29}\label{class_e_r_s_a2df6e97553fad0297e4f3e14752e8e29}} 
+\index{ERS@{ERS}!resetBoard@{resetBoard}}
+\index{resetBoard@{resetBoard}!ERS@{ERS}}
+\doxysubsubsection{\texorpdfstring{resetBoard()}{resetBoard()}}
+{\footnotesize\ttfamily void E\+R\+S.\+reset\+Board (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyPrecond}{Precondition}
+game is ran. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+clears board and redistributes cards. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+Test ouput for new decks foreach (string card in A\+I\+Deck) \{ print(card + \char`\"{} A\+I\char`\"{}); \} foreach (string card in Player\+Deck) \{ print(card + \char`\"{} Player\char`\"{}); \} print(A\+I\+Deck.\+Count + \char`\"{} \char`\"{} + Player\+Deck.\+Count);\mbox{\Hypertarget{class_e_r_s_adf14c648a2bcbe63ea9ecd4a6d6a02d8}\label{class_e_r_s_adf14c648a2bcbe63ea9ecd4a6d6a02d8}} 
+\index{ERS@{ERS}!startGame@{startGame}}
+\index{startGame@{startGame}!ERS@{ERS}}
+\doxysubsubsection{\texorpdfstring{startGame()}{startGame()}}
+{\footnotesize\ttfamily void E\+R\+S.\+start\+Game (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\begin{DoxyPrecond}{Precondition}
+game is ran. 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+creates and distributes deck. 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+none. 
+\end{DoxyReturn}
+Generate a deck for play.
+
+Shuffle cards.
+
+Divide the deck between AI and Player.
+
+output to console to test it foreach (string card in A\+I\+Deck) \{ print(card + \char`\"{} A\+I\char`\"{}); \} foreach (string card in Player\+Deck) \{ print(card + \char`\"{} Player\char`\"{}); \} print(A\+I\+Deck.\+Count + \char`\"{} \char`\"{} + Player\+Deck.\+Count);
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+E\+R\+S.\+cs\end{DoxyCompactItemize}
