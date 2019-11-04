@@ -1,21 +1,42 @@
-﻿using System.Collections;
+/// File Name UserInput.cs.
+/// Assignment EECS 448 Project 3.
+/// Brief Register clicks from user.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
     private ERS ers;
-    // Start is called before the first frame update
+
+    /*!
+     \pre game is ran.
+     \post finds object for ers to interact with.
+     \return none.
+    */
+
     void Start()
     {
         ers = FindObjectOfType<ERS>();
     }
 
-    // Update is called once per frame
+    /*!
+     \pre game is ran.
+     \post registers mouse click and calls function.
+     \return none.
+    */
+
     void Update()
     {
         GetMouseClick();
     }
+
+    /*!
+     \pre mouse is clicked.
+     \post check if deck or button is clicked.
+     \return none.
+    */
 
     void GetMouseClick()
     {
@@ -25,27 +46,37 @@ public class UserInput : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit)
             {
-                //Check what was hit
+                /// Check what was hit.
                 if (hit.collider.CompareTag("Deck"))
                 {
-                    //clicked deck
-                    //print("Deck");
+                    /// clicked deck.
                     clickedDeck();
                 }
                 if (hit.collider.CompareTag("Button"))
                 {
-                    //clicked button
-                    //print("Button");
+                    /// clicked button.
                     clickedButton();
                 }
             }
         }
     }
-    
+
+    /*!
+     \pre mouse clicked.
+     \post if deck clicked, deak card .
+     \return none.
+    */
+
     void clickedDeck()
     {
         ers.dealCards();
     }
+
+    /*!
+     \pre mouse clicked.
+     \post resets board.
+     \return none.
+    */
 
     void clickedButton()
     {
