@@ -1,4 +1,8 @@
-﻿using System.Collections;
+/// File Name ERS.cs.
+/// Assignment EECS 448 Project 3.
+/// Brief makes and displayes cards and handle gameplay.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,23 +18,42 @@ public class ERS : MonoBehaviour
     public List<string> pile;
     public int pileIndex;
 
-    // Start is called before the first frame update
+    /*!
+     \pre file opened.
+     \post game is started.
+     \return none.
+    */
+
     void Start()
     {
         startGame();
     }
 
-    // Update is called once per frame
+    /*!
+     \pre game is ran.
+     \post updates game.
+     \return none.
+    */
+
     void Update()
     {
-        
+
     }
+
+    /*!
+     \pre game is ran.
+     \post creates and distributes deck.
+     \return none.
+    */
 
     public void startGame()
     {
-        deck = GenerateDeck();//Generate a deck for play.
-        shuffle(deck);//shuffle cards
-        for(int i = 0; i < 52; i++)//divide the deck between AI and Player
+       /// Generate a deck for play.
+        deck = GenerateDeck();
+        /// Shuffle cards.
+        shuffle(deck);
+        /// Divide the deck between AI and Player.
+        for(int i = 0; i < 52; i++)
         {
             if(i%2 == 0)
             {
@@ -53,10 +76,18 @@ public class ERS : MonoBehaviour
         print(AIDeck.Count + " " + PlayerDeck.Count);**/
     }
 
+    /*!
+     \pre game is ran.
+     \post creates deck for all suits and values combos.
+     \return none.
+    */
+
     public static List<string> GenerateDeck()
     {
-        List<string> newDeck = new List<string>();//create list.
-        foreach (string s in suits)//use nested loop to populate newDeck with all 52 cards in format suit and value, ex. "S2"
+      /// create list.
+        List<string> newDeck = new List<string>();
+        /// use nested loop to populate newDeck with all 52 cards in format suit and value, ex. "S2".
+        foreach (string s in suits)
         {
             foreach (string v in values)
             {
@@ -67,6 +98,13 @@ public class ERS : MonoBehaviour
         return newDeck;
     }
 
+    /*!
+     \pre game is ran.
+     \post randomizes deck.
+     \param List<T> deck the deck.
+     \return none.
+    */
+
     void shuffle<T>(List<T> deck)
     {
         System.Random rng = new System.Random();
@@ -74,19 +112,25 @@ public class ERS : MonoBehaviour
         while(count > 1)
         {
             count--;
-            int j = rng.Next(count + 1);  
-            T card = deck[j];  
-            deck[j] = deck[count];  
+            int j = rng.Next(count + 1);
+            T card = deck[j];
+            deck[j] = deck[count];
             deck[count] = card;
         }
     }
+
+    /*!
+     \pre game is ran.
+     \post adds cards and displays them in pile.
+     \return none.
+    */
 
     public void dealCards()
     {
         float xoffset = 0.4f;
         float zoffset = 0.1f;
         if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
-        {  
+        {
             pile.Add(PlayerDeck[PlayerDeck.Count - 1]);
             pile.Add(AIDeck[AIDeck.Count - 1]);
             AIDeck.RemoveAt(AIDeck.Count - 1);
@@ -99,6 +143,12 @@ public class ERS : MonoBehaviour
             }
         }
     }
+
+    /*!
+     \pre game is ran.
+     \post clears board and redistributes cards.
+     \return none.
+    */
 
     public void resetBoard()
     {

@@ -1,4 +1,8 @@
-﻿using System.Collections;
+/// File Name UpdateCard.cs.
+/// Assignment EECS 448 Project 3.
+/// Brief Assignes sprites.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +14,12 @@ public class UpdateCard : MonoBehaviour
     private ERS ers;
     public bool faceUp;
 
-    // Start is called before the first frame update
+    /*!
+     \pre game is ran.
+     \post assigns card front sprites.
+     \return none.
+    */
+
     void Start()
     {
         faceUp = true;
@@ -29,7 +38,12 @@ public class UpdateCard : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
+    /*!
+     \pre game is ran.
+     \post if card flipped, update sprite.
+     \return none.
+    */
+
     void Update()
     {
         if(faceUp)
