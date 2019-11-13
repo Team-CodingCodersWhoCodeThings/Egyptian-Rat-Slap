@@ -295,7 +295,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ed2d6dd3d328eb44aa993aafa444aab0, type: 3}
   - {fileID: 21300000, guid: 32875c1d6efb8b64c886483784be2653, type: 3}
   - {fileID: 21300000, guid: 912517245b6f79e4fbccce05666d448a, type: 3}
-  - {fileID: 21300000, guid: b68d8a924e83d1a4796b528026ff4219, type: 3}
+  - {fileID: 21300000, guid: 8d669e8c9632a0d4d94fa4f714aa369f, type: 3}
   - {fileID: 21300000, guid: 24df74199e1155f49b05b9d80c30478d, type: 3}
   - {fileID: 21300000, guid: 31cafb3900321bc4d951d3b3fd6006da, type: 3}
   - {fileID: 21300000, guid: 34689198e0d030a4180368fe3d488a3c, type: 3}
@@ -342,6 +342,7 @@ MonoBehaviour:
   PlayerDeck: []
   pile: []
   pileIndex: 0
+  PlayerTurn: 0
 --- !u!4 &454502059
 Transform:
   m_ObjectHideFlags: 0

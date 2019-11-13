@@ -18,6 +18,8 @@ public class ERS : MonoBehaviour
     public List<string> pile;
     public int pileIndex;
     public bool PlayerTurn;
+    int slapTimer;
+    int turnTimer;
 
     /*!
      \pre file opened.
@@ -27,6 +29,8 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
+        slapTimer = 0;
+        turnTimer = 0;
         startGame();
     }
 
@@ -40,16 +44,26 @@ public class ERS : MonoBehaviour
     {
         if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
         {
-            if(!PlayerTurn)
+            
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if(!PlayerTurn)
+        {
+            turnTimer++;
+            if(turnTimer == 50)
             {
-                if(isValidSlap())
-                {
-                    slap(AIDeck);
-                }
-                else
-                {
-                    playCard(AIDeck);
-                }
+                playCard(AIDeck);
+            }
+        }
+        if(isValidSlap())
+        {
+            slapTimer++;
+            if(slapTimer == 40)
+            {
+                slap(AIDeck);
             }
         }
     }
@@ -158,6 +172,7 @@ public class ERS : MonoBehaviour
                 }
             }
             PlayerTurn = !PlayerTurn;
+            turnTimer = 0;
         }
     }
 
@@ -259,5 +274,6 @@ public class ERS : MonoBehaviour
                 pileIndex++;
             }
         }
+        slapTimer = 0;
     }
 }
