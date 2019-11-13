@@ -17,7 +17,7 @@ public class ERS : MonoBehaviour
     public List<string> PlayerDeck;
     public List<string> pile;
     public int pileIndex;
-    public bool playerTurn;
+    public bool PlayerTurn;
 
     /*!
      \pre file opened.
@@ -38,7 +38,20 @@ public class ERS : MonoBehaviour
 
     void Update()
     {
-
+        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
+        {
+            if(!PlayerTurn)
+            {
+                if(isValidSlap())
+                {
+                    slap(AIDeck);
+                }
+                else
+                {
+                    playCard(AIDeck);
+                }
+            }
+        }
     }
 
     /*!
@@ -65,7 +78,7 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        playerTurn = true;
+        PlayerTurn = true;
         /**output to console to test it
         foreach (string card in AIDeck)
         {
@@ -129,7 +142,7 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
-        if((deck ==AIDeck) || (playerTurn))
+        if((deck ==AIDeck) || (PlayerTurn))
         {
             float xoffset = 0.4f;
             float zoffset = 0.1f;
@@ -144,6 +157,7 @@ public class ERS : MonoBehaviour
                     pileIndex++;
                 }
             }
+            PlayerTurn = !PlayerTurn;
         }
     }
 
@@ -223,11 +237,6 @@ public class ERS : MonoBehaviour
         }
         else if(deck.Count > 0)
         {
-            if(deck.Count > 1)
-            {
-                pile.Insert(0, deck[deck.Count -1]);
-                deck.RemoveAt(deck.Count -1);
-            }
             pile.Insert(0, deck[deck.Count -1]);
             deck.RemoveAt(deck.Count -1);
             float xoffset = 0.4f;
