@@ -46,6 +46,8 @@ public class ERS : MonoBehaviour
         {
             
         }
+        GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
+        GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
     }
 
     void FixedUpdate()
