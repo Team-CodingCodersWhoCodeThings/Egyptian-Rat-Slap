@@ -17,7 +17,9 @@ public class ERS : MonoBehaviour
     public List<string> PlayerDeck;
     public List<string> pile;
     public int pileIndex;
-    public bool playerTurn;
+    public bool PlayerTurn;
+    int slapTimer;
+    int turnTimer;
 
     /*!
      \pre file opened.
@@ -27,6 +29,8 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
+        slapTimer = 0;
+        turnTimer = 0;
         startGame();
     }
 
@@ -38,7 +42,32 @@ public class ERS : MonoBehaviour
 
     void Update()
     {
+        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
+        {
+            
+        }
+        GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
+        GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
+    }
 
+    void FixedUpdate()
+    {
+        if(!PlayerTurn)
+        {
+            turnTimer++;
+            if(turnTimer == 50)
+            {
+                playCard(AIDeck);
+            }
+        }
+        if(isValidSlap())
+        {
+            slapTimer++;
+            if(slapTimer == 40)
+            {
+                slap(AIDeck);
+            }
+        }
     }
 
     /*!
@@ -65,7 +94,7 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        playerTurn = true;
+        PlayerTurn = true;
         /**output to console to test it
         foreach (string card in AIDeck)
         {
@@ -129,7 +158,7 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
-        if((deck ==AIDeck) || (playerTurn))
+        if((deck ==AIDeck) || (PlayerTurn))
         {
             float xoffset = 0.4f;
             float zoffset = 0.1f;
@@ -144,6 +173,8 @@ public class ERS : MonoBehaviour
                     pileIndex++;
                 }
             }
+            PlayerTurn = !PlayerTurn;
+            turnTimer = 0;
         }
     }
 
@@ -223,11 +254,6 @@ public class ERS : MonoBehaviour
         }
         else if(deck.Count > 0)
         {
-            if(deck.Count > 1)
-            {
-                pile.Insert(0, deck[deck.Count -1]);
-                deck.RemoveAt(deck.Count -1);
-            }
             pile.Insert(0, deck[deck.Count -1]);
             deck.RemoveAt(deck.Count -1);
             float xoffset = 0.4f;
@@ -250,5 +276,6 @@ public class ERS : MonoBehaviour
                 pileIndex++;
             }
         }
+        slapTimer = 0;
     }
 }
