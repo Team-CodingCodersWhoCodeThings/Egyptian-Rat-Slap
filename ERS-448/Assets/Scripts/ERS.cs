@@ -17,6 +17,7 @@ public class ERS : MonoBehaviour
     public List<string> PlayerDeck;
     public List<string> pile;
     public int pileIndex;
+    public bool playerTurn;
 
     /*!
      \pre file opened.
@@ -64,6 +65,7 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
+        playerTurn = true;
         /**output to console to test it
         foreach (string card in AIDeck)
         {
@@ -127,17 +129,20 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
-        float xoffset = 0.4f;
-        float zoffset = 0.1f;
-        if(deck.Count > 0)
+        if((deck ==AIDeck) || (playerTurn))
         {
-            pile.Add(deck[deck.Count - 1]);
-            deck.RemoveAt(deck.Count - 1);
-            while(pileIndex < pile.Count)
+            float xoffset = 0.4f;
+            float zoffset = 0.1f;
+            if(deck.Count > 0)
             {
-                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
-                newCard.name = pile[pileIndex];
-                pileIndex++;
+                pile.Add(deck[deck.Count - 1]);
+                deck.RemoveAt(deck.Count - 1);
+                while(pileIndex < pile.Count)
+                {
+                    GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
+                    newCard.name = pile[pileIndex];
+                    pileIndex++;
+                }
             }
         }
     }
@@ -210,7 +215,7 @@ public class ERS : MonoBehaviour
         pileIndex = 0;
         if(isValidSlap())
         {
-            for(int i = (pile.Count - 1); i > 0; i--)
+            for(int i = (pile.Count - 1); i >= 0; i--)
             {
                 deck.Insert(0, pile[i]);
                 pile.RemoveAt(i);
