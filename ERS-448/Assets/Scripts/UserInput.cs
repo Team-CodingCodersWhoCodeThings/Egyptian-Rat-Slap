@@ -69,7 +69,7 @@ public class UserInput : MonoBehaviour
 
     void clickedDeck()
     {
-        ers.dealCards();
+        ers.playCard(ers.PlayerDeck);
     }
 
     /*!
@@ -80,6 +80,6 @@ public class UserInput : MonoBehaviour
 
     void clickedButton()
     {
-        ers.resetBoard();
+        ers.slap(ers.PlayerDeck);
     }
 }

@@ -125,16 +125,14 @@ public class ERS : MonoBehaviour
      \return none.
     */
 
-    public void dealCards()
+    public void playCard(List<string> deck)
     {
         float xoffset = 0.4f;
         float zoffset = 0.1f;
-        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
+        if(deck.Count > 0)
         {
-            pile.Add(PlayerDeck[PlayerDeck.Count - 1]);
-            pile.Add(AIDeck[AIDeck.Count - 1]);
-            AIDeck.RemoveAt(AIDeck.Count - 1);
-            PlayerDeck.RemoveAt(PlayerDeck.Count - 1);
+            pile.Add(deck[deck.Count - 1]);
+            deck.RemoveAt(deck.Count - 1);
             while(pileIndex < pile.Count)
             {
                 GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
@@ -182,5 +180,70 @@ public class ERS : MonoBehaviour
             print(card + " Player");
         }
         print(AIDeck.Count + " " + PlayerDeck.Count);**/
+    }
+
+    bool isValidSlap()
+    {
+        if(pile.Count > 1)
+        {
+            if(pile[pile.Count - 1][1] == pile[pile.Count - 2][1])
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void slap(List<string> deck)
+    {
+        foreach (string card in pile)
+        {
+            Destroy(GameObject.Find(card));
+        }
+        pileIndex = 0;
+        if(isValidSlap())
+        {
+            for(int i = (pile.Count - 1); i > 0; i--)
+            {
+                deck.Insert(0, pile[i]);
+                pile.RemoveAt(i);
+            }
+        }
+        else if(deck.Count > 0)
+        {
+            if(deck.Count > 1)
+            {
+                pile.Insert(0, deck[deck.Count -1]);
+                deck.RemoveAt(deck.Count -1);
+            }
+            pile.Insert(0, deck[deck.Count -1]);
+            deck.RemoveAt(deck.Count -1);
+            float xoffset = 0.4f;
+            float zoffset = 0.1f;
+            while(pileIndex < pile.Count)
+            {
+                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
+                newCard.name = pile[pileIndex];
+                pileIndex++;
+            }
+        }
+        else
+        {
+            float xoffset = 0.4f;
+            float zoffset = 0.1f;
+            while(pileIndex < pile.Count)
+            {
+                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
+                newCard.name = pile[pileIndex];
+                pileIndex++;
+            }
+        }
     }
 }
