@@ -17,9 +17,11 @@ public class ERS : MonoBehaviour
     public List<string> PlayerDeck;
     public List<string> pile;
     public int pileIndex;
-    public bool PlayerTurn;
+    public bool playerTurn;
     int slapTimer;
     int turnTimer;
+    bool countdownState;
+    int countdown;
 
     /*!
      \pre file opened.
@@ -42,7 +44,7 @@ public class ERS : MonoBehaviour
 
     void Update()
     {
-        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0))
+        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0) && (!isValidSlap()))
         {
             
         }
@@ -52,7 +54,7 @@ public class ERS : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(!PlayerTurn)
+        if(!playerTurn)
         {
             turnTimer++;
             if(turnTimer == 50)
@@ -94,7 +96,7 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        PlayerTurn = true;
+        playerTurn = true;
         /**output to console to test it
         foreach (string card in AIDeck)
         {
@@ -158,7 +160,7 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
-        if((deck ==AIDeck) || (PlayerTurn))
+        if((deck ==AIDeck) || (playerTurn))
         {
             float xoffset = 0.4f;
             float zoffset = 0.1f;
@@ -173,8 +175,63 @@ public class ERS : MonoBehaviour
                     pileIndex++;
                 }
             }
-            PlayerTurn = !PlayerTurn;
             turnTimer = 0;
+            if(pile[pile.Count -1][1] == 'J')
+            {
+                playerTurn = !playerTurn;
+                countdownState = true;
+                countdown = 1;
+            }
+            else if(pile[pile.Count -1][1] == 'Q')
+            {
+                playerTurn = !playerTurn;
+                countdownState = true;
+                countdown = 2;
+            }
+            else if(pile[pile.Count -1][1] == 'K')
+            {
+                playerTurn = !playerTurn;
+                countdownState = true;
+                countdown = 3;
+            }
+            else if(pile[pile.Count -1][1] == 'A')
+            {
+                playerTurn = !playerTurn;
+                countdownState = true;
+                countdown = 4;
+            }
+            else if(countdownState)
+            {
+                countdown--;
+                if(countdown == 0)
+                {
+                    if(deck == AIDeck)
+                    {
+                        for(int i = (pile.Count - 1); i >= 0; i--)
+                        {
+                            PlayerDeck.Insert(0, pile[i]);
+                            Destroy(GameObject.Find(pile[i]));
+                            pile.RemoveAt(i);
+                        }
+                    }
+                    else
+                    {
+                        for(int i = (pile.Count - 1); i >= 0; i--)
+                        {
+                            AIDeck.Insert(0, pile[i]);
+                            Destroy(GameObject.Find(pile[i]));
+                            pile.RemoveAt(i);
+                        }
+                    }
+                    countdownState = false;
+                    playerTurn = !playerTurn;
+                    pileIndex = 0;
+                }
+            }
+            else
+            {
+                playerTurn = !playerTurn;
+            }
         }
     }
 
