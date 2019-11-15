@@ -22,6 +22,7 @@ public class ERS : MonoBehaviour
     int turnTimer;
     bool countdownState;
     int countdown;
+    int reactionTimer;
 
     /*!
      \pre file opened.
@@ -69,6 +70,10 @@ public class ERS : MonoBehaviour
             {
                 slap(AIDeck);
             }
+        }
+        if(reactionTimer > 0)
+        {
+            reactionTimer--;
         }
     }
 
@@ -296,6 +301,10 @@ public class ERS : MonoBehaviour
 
     public void slap(List<string> deck)
     {
+        if(reactionTimer > 0)
+        {
+            return;
+        }
         foreach (string card in pile)
         {
             Destroy(GameObject.Find(card));
@@ -308,6 +317,7 @@ public class ERS : MonoBehaviour
                 deck.Insert(0, pile[i]);
                 pile.RemoveAt(i);
             }
+            reactionTimer = 5;
         }
         else if(deck.Count > 0)
         {
