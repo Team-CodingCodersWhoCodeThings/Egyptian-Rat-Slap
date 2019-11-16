@@ -10,6 +10,7 @@ public class ERS : MonoBehaviour
 {
     public GameObject cardPrefab;
     public Sprite[] cardFronts;
+    public Sprite[] cardWins;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
     public static string[] values = new string[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public List<string> deck;
@@ -22,6 +23,9 @@ public class ERS : MonoBehaviour
     int turnTimer;
     bool countdownState;
     int countdown;
+    int countdownTimer;
+    int reactionTimer;
+    private SpriteRenderer winRenderer;
 
     /*!
      \pre file opened.
@@ -34,6 +38,7 @@ public class ERS : MonoBehaviour
         slapTimer = 0;
         turnTimer = 0;
         startGame();
+        winRenderer = GameObject.Find("Card Win").GetComponent<SpriteRenderer>();
     }
 
     /*!
@@ -44,9 +49,18 @@ public class ERS : MonoBehaviour
 
     void Update()
     {
-        if((AIDeck.Count > 0) && (PlayerDeck.Count > 0) && (!isValidSlap()))
+        if(((AIDeck.Count == 0) || (PlayerDeck.Count == 0)) && (!isValidSlap()))
         {
-            
+            reactionTimer = 50;
+            if(PlayerDeck.Count == 0)
+            {
+                winRenderer.sprite = cardWins[4];
+            }
+            else
+            {
+                winRenderer.sprite = cardWins[5];
+            }
+            resetBoard();
         }
         GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
         GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
@@ -57,7 +71,7 @@ public class ERS : MonoBehaviour
         if(!playerTurn)
         {
             turnTimer++;
-            if(turnTimer == 50)
+            if(turnTimer > 50)
             {
                 playCard(AIDeck);
             }
@@ -69,6 +83,48 @@ public class ERS : MonoBehaviour
             {
                 slap(AIDeck);
             }
+        }
+        if(reactionTimer > 0)
+        {
+            reactionTimer--;
+        }
+        else
+        {
+            winRenderer.sprite = null;
+        }
+        if(countdownTimer > 0)
+        {
+            countdownTimer--;
+        }
+        if((countdown == 0) && (countdownTimer == 0) && countdownState) 
+        {
+                if(!playerTurn)
+                {
+                    for(int i = (pile.Count - 1); i >= 0; i--)
+                    {
+                        PlayerDeck.Insert(0, pile[i]);
+                        Destroy(GameObject.Find(pile[i]));
+                        pile.RemoveAt(i);
+                    }
+                    turnTimer = 0;
+                    winRenderer.sprite = cardWins[1];
+                    reactionTimer = 20;
+                }
+                else
+                {
+                    for(int i = (pile.Count - 1); i >= 0; i--)
+                    {
+                        AIDeck.Insert(0, pile[i]);
+                        Destroy(GameObject.Find(pile[i]));
+                        pile.RemoveAt(i);
+                    }
+                    winRenderer.sprite = cardWins[0];
+                    reactionTimer = 20;
+                }
+                countdownState = false;
+                playerTurn = !playerTurn;
+                pileIndex = 0;
+                slapTimer = 0;
         }
     }
 
@@ -160,6 +216,10 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
+        if((reactionTimer > 0) || (countdownState && (countdown == 0)))
+        {
+            return;
+        }
         if((deck ==AIDeck) || (playerTurn))
         {
             float xoffset = 0.4f;
@@ -203,7 +263,8 @@ public class ERS : MonoBehaviour
             else if(countdownState)
             {
                 countdown--;
-                if(countdown == 0)
+                countdownTimer = 45;
+                /**if(countdown == 0)
                 {
                     if(deck == AIDeck)
                     {
@@ -226,7 +287,7 @@ public class ERS : MonoBehaviour
                     countdownState = false;
                     playerTurn = !playerTurn;
                     pileIndex = 0;
-                }
+                }**/
             }
             else
             {
@@ -263,16 +324,7 @@ public class ERS : MonoBehaviour
             }
         }
         pileIndex = 0;
-        /** Test ouput for new decks
-        foreach (string card in AIDeck)
-        {
-            print(card + " AI");
-        }
-        foreach (string card in PlayerDeck)
-        {
-            print(card + " Player");
-        }
-        print(AIDeck.Count + " " + PlayerDeck.Count);**/
+        playerTurn = true;
     }
 
     bool isValidSlap()
@@ -296,6 +348,10 @@ public class ERS : MonoBehaviour
 
     public void slap(List<string> deck)
     {
+        if(reactionTimer > 0)
+        {
+            return;
+        }
         foreach (string card in pile)
         {
             Destroy(GameObject.Find(card));
@@ -307,6 +363,17 @@ public class ERS : MonoBehaviour
             {
                 deck.Insert(0, pile[i]);
                 pile.RemoveAt(i);
+            }
+            reactionTimer = 20;
+            countdownState = false;
+            countdown = 0;
+            if(deck == AIDeck)
+            {
+                winRenderer.sprite = cardWins[2];
+            }
+            else
+            {
+                winRenderer.sprite = cardWins[3];
             }
         }
         else if(deck.Count > 0)
