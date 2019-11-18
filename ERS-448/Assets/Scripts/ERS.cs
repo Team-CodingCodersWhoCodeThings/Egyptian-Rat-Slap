@@ -62,6 +62,14 @@ public class ERS : MonoBehaviour
             }
             resetBoard();
         }
+        if(playerTurn)
+        {
+            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: Player";
+        }
+        else
+        {
+            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: AI";
+        }
         GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
         GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
     }
@@ -335,6 +343,10 @@ public class ERS : MonoBehaviour
             {
                 return true;
             }
+            else if(pile[pile.Count - 1][1] == pile[pile.Count - 3][1])
+            {
+                return true;
+            }
             else
             {
                 return false;
@@ -367,6 +379,7 @@ public class ERS : MonoBehaviour
             reactionTimer = 20;
             countdownState = false;
             countdown = 0;
+            turnTimer = 0;
             if(deck == AIDeck)
             {
                 winRenderer.sprite = cardWins[2];
