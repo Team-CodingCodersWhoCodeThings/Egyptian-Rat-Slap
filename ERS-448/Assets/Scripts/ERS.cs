@@ -62,6 +62,14 @@ public class ERS : MonoBehaviour
             }
             resetBoard();
         }
+        if(playerTurn)
+        {
+            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: Player";
+        }
+        else
+        {
+            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: AI";
+        }
         GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
         GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
     }
@@ -103,9 +111,9 @@ public class ERS : MonoBehaviour
                     for(int i = (pile.Count - 1); i >= 0; i--)
                     {
                         PlayerDeck.Insert(0, pile[i]);
-                        Destroy(GameObject.Find(pile[i]));
                         pile.RemoveAt(i);
                     }
+                    updatePile();
                     turnTimer = 0;
                     winRenderer.sprite = cardWins[1];
                     reactionTimer = 20;
@@ -115,9 +123,9 @@ public class ERS : MonoBehaviour
                     for(int i = (pile.Count - 1); i >= 0; i--)
                     {
                         AIDeck.Insert(0, pile[i]);
-                        Destroy(GameObject.Find(pile[i]));
                         pile.RemoveAt(i);
                     }
+                    updatePile();
                     winRenderer.sprite = cardWins[0];
                     reactionTimer = 20;
                 }
@@ -153,16 +161,6 @@ public class ERS : MonoBehaviour
             }
         }
         playerTurn = true;
-        /**output to console to test it
-        foreach (string card in AIDeck)
-        {
-            print(card + " AI");
-        }
-        foreach (string card in PlayerDeck)
-        {
-            print(card + " Player");
-        }
-        print(AIDeck.Count + " " + PlayerDeck.Count);**/
     }
 
     /*!
@@ -222,18 +220,11 @@ public class ERS : MonoBehaviour
         }
         if((deck ==AIDeck) || (playerTurn))
         {
-            float xoffset = 0.4f;
-            float zoffset = 0.1f;
             if(deck.Count > 0)
             {
                 pile.Add(deck[deck.Count - 1]);
                 deck.RemoveAt(deck.Count - 1);
-                while(pileIndex < pile.Count)
-                {
-                    GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
-                    newCard.name = pile[pileIndex];
-                    pileIndex++;
-                }
+                updatePile();
             }
             turnTimer = 0;
             if(pile[pile.Count -1][1] == 'J')
@@ -264,30 +255,7 @@ public class ERS : MonoBehaviour
             {
                 countdown--;
                 countdownTimer = 45;
-                /**if(countdown == 0)
-                {
-                    if(deck == AIDeck)
-                    {
-                        for(int i = (pile.Count - 1); i >= 0; i--)
-                        {
-                            PlayerDeck.Insert(0, pile[i]);
-                            Destroy(GameObject.Find(pile[i]));
-                            pile.RemoveAt(i);
-                        }
-                    }
-                    else
-                    {
-                        for(int i = (pile.Count - 1); i >= 0; i--)
-                        {
-                            AIDeck.Insert(0, pile[i]);
-                            Destroy(GameObject.Find(pile[i]));
-                            pile.RemoveAt(i);
-                        }
-                    }
-                    countdownState = false;
-                    playerTurn = !playerTurn;
-                    pileIndex = 0;
-                }**/
+                
             }
             else
             {
@@ -304,11 +272,8 @@ public class ERS : MonoBehaviour
 
     public void resetBoard()
     {
-        foreach (string card in pile)
-        {
-            Destroy(GameObject.Find(card));
-        }
         pile.Clear();
+        updatePile();
         AIDeck.Clear();
         PlayerDeck.Clear();
         shuffle(deck);//shuffle cards
@@ -323,8 +288,22 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
-        pileIndex = 0;
         playerTurn = true;
+    }
+
+    void updatePile()
+    {
+        foreach (string card in deck)
+        {
+            Destroy(GameObject.Find(card));
+        }
+        float xoffset = 0.4f;
+        float zoffset = 0.1f;
+        for(int i = 0; i < pile.Count; i++)
+        {
+            GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (i * xoffset), 0, 0  - (i * zoffset)), Quaternion.identity);
+            newCard.name = pile[i];
+        }
     }
 
     bool isValidSlap()
@@ -335,6 +314,10 @@ public class ERS : MonoBehaviour
             {
                 return true;
             }
+            /**else if(pile[pile.Count - 1][1] == pile[pile.Count - 3][1])
+            {
+                return true;
+            }**/
             else
             {
                 return false;
@@ -352,11 +335,6 @@ public class ERS : MonoBehaviour
         {
             return;
         }
-        foreach (string card in pile)
-        {
-            Destroy(GameObject.Find(card));
-        }
-        pileIndex = 0;
         if(isValidSlap())
         {
             for(int i = (pile.Count - 1); i >= 0; i--)
@@ -364,9 +342,11 @@ public class ERS : MonoBehaviour
                 deck.Insert(0, pile[i]);
                 pile.RemoveAt(i);
             }
+            updatePile();
             reactionTimer = 20;
             countdownState = false;
             countdown = 0;
+            turnTimer = 0;
             if(deck == AIDeck)
             {
                 winRenderer.sprite = cardWins[2];
@@ -380,25 +360,11 @@ public class ERS : MonoBehaviour
         {
             pile.Insert(0, deck[deck.Count -1]);
             deck.RemoveAt(deck.Count -1);
-            float xoffset = 0.4f;
-            float zoffset = 0.1f;
-            while(pileIndex < pile.Count)
-            {
-                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
-                newCard.name = pile[pileIndex];
-                pileIndex++;
-            }
+            updatePile();
         }
         else
         {
-            float xoffset = 0.4f;
-            float zoffset = 0.1f;
-            while(pileIndex < pile.Count)
-            {
-                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (pileIndex * xoffset), 0, 0  - (pileIndex * zoffset)), Quaternion.identity);
-                newCard.name = pile[pileIndex];
-                pileIndex++;
-            }
+            updatePile();
         }
         slapTimer = 0;
     }
