@@ -30,6 +30,10 @@ public class UserInput : MonoBehaviour
     void Update()
     {
         GetMouseClick();
+        if (Input.GetKeyDown("space"))
+        {
+            clickedButton();
+        }
     }
 
     /*!
