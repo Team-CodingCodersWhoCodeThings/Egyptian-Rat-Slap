@@ -12,7 +12,6 @@ public class UpdateCard : MonoBehaviour
     public Sprite cardBack;
     private SpriteRenderer spriteRenderer;
     private ERS ers;
-    public bool faceUp;
 
     /*!
      \pre game is ran.
@@ -22,7 +21,6 @@ public class UpdateCard : MonoBehaviour
 
     void Start()
     {
-        faceUp = true;
         List<string> deck = ERS.GenerateDeck();
         ers = FindObjectOfType<ERS>();
         int pos = 0;
@@ -36,6 +34,7 @@ public class UpdateCard : MonoBehaviour
             pos++;
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = cardFront;
     }
 
     /*!
@@ -46,13 +45,6 @@ public class UpdateCard : MonoBehaviour
 
     void Update()
     {
-        if(faceUp)
-        {
-            spriteRenderer.sprite = cardFront;
-        }
-        else
-        {
-            spriteRenderer.sprite = cardBack;
-        }
+        
     }
 }
