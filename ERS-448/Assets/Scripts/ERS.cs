@@ -289,6 +289,11 @@ public class ERS : MonoBehaviour
             }
         }
         playerTurn = true;
+        slapTimer = 0;
+        turnTimer = 0;
+        reactionTimer = 0;
+        countdownState = false;
+        countdownTimer = 0;
     }
 
     void updatePile()
