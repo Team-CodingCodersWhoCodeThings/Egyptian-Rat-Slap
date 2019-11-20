@@ -11,6 +11,7 @@ public class ERS : MonoBehaviour
     public GameObject cardPrefab;
     public Sprite[] cardFronts;
     public Sprite[] cardWins;
+    public Sprite[] turns;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
     public static string[] values = new string[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public List<string> deck;
@@ -64,11 +65,13 @@ public class ERS : MonoBehaviour
         }
         if(playerTurn)
         {
-            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: Player";
+            GameObject.Find("Player Turn").GetComponent<SpriteRenderer>().sprite = turns[0];
+            GameObject.Find("AI Turn").GetComponent<SpriteRenderer>().sprite = null;
         }
         else
         {
-            GameObject.Find("Turn").GetComponent<TextMesh>().text = "Turn: AI";
+            GameObject.Find("Player Turn").GetComponent<SpriteRenderer>().sprite = null;
+            GameObject.Find("AI Turn").GetComponent<SpriteRenderer>().sprite = turns[1];
         }
         GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
         GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
@@ -319,10 +322,17 @@ public class ERS : MonoBehaviour
             {
                 return true;
             }
-            /**else if(pile[pile.Count - 1][1] == pile[pile.Count - 3][1])
+            else if(pile.Count > 2)
             {
-                return true;
-            }**/
+                if(pile[pile.Count - 1][1] == pile[pile.Count - 3][1])
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             else
             {
                 return false;
@@ -355,10 +365,12 @@ public class ERS : MonoBehaviour
             if(deck == AIDeck)
             {
                 winRenderer.sprite = cardWins[2];
+                playerTurn = false;
             }
             else
             {
                 winRenderer.sprite = cardWins[3];
+                playerTurn = true;
             }
         }
         else if(deck.Count > 0)
