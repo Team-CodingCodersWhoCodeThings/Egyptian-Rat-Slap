@@ -87,7 +87,7 @@ public class ERS : MonoBehaviour
         if(isValidSlap())
         {
             slapTimer++;
-            if(slapTimer == 40)
+            if(slapTimer > 40)
             {
                 slap(AIDeck);
             }
