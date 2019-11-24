@@ -52,16 +52,17 @@ public class ERS : MonoBehaviour
     {
         if(((AIDeck.Count == 0) || (PlayerDeck.Count == 0)) && (!isValidSlap()))
         {
-            reactionTimer = 50;
+            resetBoard();
             if(PlayerDeck.Count == 0)
             {
+                reactionTimer = 50;
                 winRenderer.sprite = cardWins[4];
             }
             else
             {
+                reactionTimer = 50;
                 winRenderer.sprite = cardWins[5];
             }
-            resetBoard();
         }
         if(playerTurn)
         {
@@ -303,7 +304,7 @@ public class ERS : MonoBehaviour
     {
         foreach (string card in deck)
         {
-            Destroy(GameObject.Find(card));
+            DestroyImmediate(GameObject.Find(card));
         }
         float xoffset = 0.4f;
         float zoffset = 0.1f;
