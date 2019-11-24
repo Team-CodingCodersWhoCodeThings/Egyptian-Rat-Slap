@@ -52,16 +52,26 @@ public class ERS : MonoBehaviour
     {
         if(((AIDeck.Count == 0) || (PlayerDeck.Count == 0)) && (!isValidSlap()))
         {
-            resetBoard();
+            bool playerWin;
             if(PlayerDeck.Count == 0)
             {
+                playerWin = false;
+            }
+            else
+            {
+                playerWin = true;
+            }
+            if(PlayerDeck.Count == 0)
+            resetBoard();
+            if(playerWin)
+            {
                 reactionTimer = 50;
-                winRenderer.sprite = cardWins[4];
+                winRenderer.sprite = cardWins[5];
             }
             else
             {
                 reactionTimer = 50;
-                winRenderer.sprite = cardWins[5];
+                winRenderer.sprite = cardWins[4];
             }
         }
         if(playerTurn)
@@ -306,11 +316,11 @@ public class ERS : MonoBehaviour
         {
             DestroyImmediate(GameObject.Find(card));
         }
-        float xoffset = 0.4f;
+        float xoffset = 0.5f;
         float zoffset = 0.1f;
         for(int i = 0; i < pile.Count; i++)
         {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(-10.2f  + (i * xoffset), 0, 0  - (i * zoffset)), Quaternion.identity);
+            GameObject newCard = Instantiate(cardPrefab, new Vector3(-10f  + (i * xoffset), 0, 0  - (i * zoffset)), Quaternion.identity);
             newCard.name = pile[i];
         }
     }
