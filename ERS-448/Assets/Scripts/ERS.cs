@@ -28,6 +28,7 @@ public class ERS : MonoBehaviour
     int countdownTimer;
     int reactionTimer;
     private SpriteRenderer winRenderer;
+    public bool difficultySelect;
 
     /*!
      \pre file opened.
@@ -38,6 +39,8 @@ public class ERS : MonoBehaviour
     void Start()
     {
         timings = new int[] {50, 40};
+        difficultySelect = true;
+        reactionTimer = 1;
         slapTimer = 0;
         turnTimer = 0;
         startGame();
@@ -108,7 +111,7 @@ public class ERS : MonoBehaviour
                 slap(AIDeck);
             }
         }
-        if(reactionTimer > 0)
+        if((reactionTimer > 0) && (!difficultySelect))
         {
             reactionTimer--;
         }
@@ -270,7 +273,7 @@ public class ERS : MonoBehaviour
             else if(countdownState)
             {
                 countdown--;
-                countdownTimer = 45;
+                countdownTimer = (timings[0] + timings[1]) / 2;
                 
             }
             else
