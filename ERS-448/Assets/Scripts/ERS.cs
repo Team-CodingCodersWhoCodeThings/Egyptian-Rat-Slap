@@ -12,6 +12,7 @@ public class ERS : MonoBehaviour
     public Sprite[] cardFronts;
     public Sprite[] cardWins;
     public Sprite[] turns;
+    public int[] timings;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
     public static string[] values = new string[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     public List<string> deck;
@@ -36,6 +37,7 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
+        timings = new int[] {50, 40};
         slapTimer = 0;
         turnTimer = 0;
         startGame();
@@ -93,7 +95,7 @@ public class ERS : MonoBehaviour
         if(!playerTurn)
         {
             turnTimer++;
-            if(turnTimer > 50)
+            if(turnTimer > timings[0])
             {
                 playCard(AIDeck);
             }
@@ -101,7 +103,7 @@ public class ERS : MonoBehaviour
         if(isValidSlap())
         {
             slapTimer++;
-            if(slapTimer > 40)
+            if(slapTimer > timings[1])
             {
                 slap(AIDeck);
             }
