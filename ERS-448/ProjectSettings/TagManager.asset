@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Deck
   - Button
+  - easy
+  - medium
+  - hard
   layers:
   - Default
   - TransparentFX

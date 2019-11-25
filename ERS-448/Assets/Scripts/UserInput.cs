@@ -61,6 +61,30 @@ public class UserInput : MonoBehaviour
                     /// clicked button.
                     clickedButton();
                 }
+                if (hit.collider.CompareTag("easy"))
+                {
+                    ers.timings = new int[] {65, 55};
+                    ers.difficultySelect = false;
+                    GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Medium").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Hard").GetComponent<SpriteRenderer>().sprite = null;
+                }
+                if (hit.collider.CompareTag("medium"))
+                {
+                    ers.timings = new int[] {50, 40};
+                    ers.difficultySelect = false;
+                    GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Medium").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Hard").GetComponent<SpriteRenderer>().sprite = null;
+                }
+                if (hit.collider.CompareTag("hard"))
+                {
+                    ers.timings = new int[] {38, 28};
+                    ers.difficultySelect = false;
+                    GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Medium").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Hard").GetComponent<SpriteRenderer>().sprite = null;
+                }
             }
         }
     }

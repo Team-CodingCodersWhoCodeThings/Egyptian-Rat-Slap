@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using IngameDebugConsole;
 
 public class ERS : MonoBehaviour
 {
@@ -23,11 +24,12 @@ public class ERS : MonoBehaviour
     public bool playerTurn;
     int slapTimer;
     int turnTimer;
-    bool countdownState;
-    int countdown;
+    public bool countdownState;
+    public int countdown;
     int countdownTimer;
     int reactionTimer;
     private SpriteRenderer winRenderer;
+    public bool difficultySelect;
 
     /*!
      \pre file opened.
@@ -37,7 +39,10 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
+        
         timings = new int[] {50, 40};
+        difficultySelect = true;
+        reactionTimer = 1;
         slapTimer = 0;
         turnTimer = 0;
         startGame();
@@ -108,7 +113,7 @@ public class ERS : MonoBehaviour
                 slap(AIDeck);
             }
         }
-        if(reactionTimer > 0)
+        if((reactionTimer > 0) && (!difficultySelect))
         {
             reactionTimer--;
         }
@@ -270,7 +275,7 @@ public class ERS : MonoBehaviour
             else if(countdownState)
             {
                 countdown--;
-                countdownTimer = 45;
+                countdownTimer = (timings[0] + timings[1]) / 2;
                 
             }
             else
@@ -312,7 +317,7 @@ public class ERS : MonoBehaviour
         countdownTimer = 0;
     }
 
-    void updatePile()
+    public void updatePile()
     {
         foreach (string card in deck)
         {
@@ -327,7 +332,7 @@ public class ERS : MonoBehaviour
         }
     }
 
-    bool isValidSlap()
+    public bool isValidSlap()
     {
         if(pile.Count > 1)
         {
