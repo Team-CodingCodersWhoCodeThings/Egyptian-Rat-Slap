@@ -12,6 +12,7 @@ public class ERS : MonoBehaviour
     public GameObject cardPrefab;
     public Sprite[] cardFronts;
     public Sprite[] cardWins;
+    public Sprite menuButton;
     public Sprite[] turns;
     public int[] timings;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
@@ -47,6 +48,7 @@ public class ERS : MonoBehaviour
         turnTimer = 0;
         startGame();
         winRenderer = GameObject.Find("Card Win").GetComponent<SpriteRenderer>();
+        GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = null;
     }
 
     /*!
@@ -68,7 +70,6 @@ public class ERS : MonoBehaviour
             {
                 playerWin = true;
             }
-            if(PlayerDeck.Count == 0)
             resetBoard();
             if(playerWin)
             {
@@ -80,6 +81,8 @@ public class ERS : MonoBehaviour
                 reactionTimer = 50;
                 winRenderer.sprite = cardWins[4];
             }
+            difficultySelect = true;
+            GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = menuButton;
         }
         if(playerTurn)
         {
@@ -117,7 +120,7 @@ public class ERS : MonoBehaviour
         {
             reactionTimer--;
         }
-        else
+        else if(reactionTimer == 0)
         {
             winRenderer.sprite = null;
         }

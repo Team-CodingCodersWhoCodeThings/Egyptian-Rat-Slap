@@ -85,6 +85,10 @@ public class UserInput : MonoBehaviour
                     GameObject.Find("Medium").GetComponent<SpriteRenderer>().sprite = null;
                     GameObject.Find("Hard").GetComponent<SpriteRenderer>().sprite = null;
                 }
+                if (hit.collider.CompareTag("menu"))
+                {
+                    Application.LoadLevel("MenuScene");
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ TagManager:
   - easy
   - medium
   - hard
+  - menu
   layers:
   - Default
   - TransparentFX
