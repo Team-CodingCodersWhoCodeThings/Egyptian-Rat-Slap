@@ -24,8 +24,8 @@ public class ERS : MonoBehaviour
     public bool playerTurn;
     int slapTimer;
     int turnTimer;
-    bool countdownState;
-    int countdown;
+    public bool countdownState;
+    public int countdown;
     int countdownTimer;
     int reactionTimer;
     private SpriteRenderer winRenderer;
@@ -317,7 +317,7 @@ public class ERS : MonoBehaviour
         countdownTimer = 0;
     }
 
-    void updatePile()
+    public void updatePile()
     {
         foreach (string card in deck)
         {
@@ -332,7 +332,7 @@ public class ERS : MonoBehaviour
         }
     }
 
-    bool isValidSlap()
+    public bool isValidSlap()
     {
         if(pile.Count > 1)
         {
