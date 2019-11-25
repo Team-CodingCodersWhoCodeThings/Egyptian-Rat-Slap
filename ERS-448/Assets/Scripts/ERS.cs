@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using IngameDebugConsole;
 
 public class ERS : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
+        
         timings = new int[] {50, 40};
         difficultySelect = true;
         reactionTimer = 1;
