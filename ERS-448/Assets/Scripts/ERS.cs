@@ -13,6 +13,7 @@ public class ERS : MonoBehaviour
     public Sprite[] cardFronts;
     public Sprite[] cardWins;
     public Sprite menuButton;
+    public Sprite playButton;
     public Sprite[] turns;
     public int[] timings;
     public static string[] suits = new string[] {"C", "D", "H", "S"};
@@ -29,7 +30,7 @@ public class ERS : MonoBehaviour
     public int countdown;
     int countdownTimer;
     int reactionTimer;
-    private SpriteRenderer winRenderer;
+    public SpriteRenderer winRenderer;
     public bool difficultySelect;
 
     /*!
@@ -49,6 +50,7 @@ public class ERS : MonoBehaviour
         startGame();
         winRenderer = GameObject.Find("Card Win").GetComponent<SpriteRenderer>();
         GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = null;
+        GameObject.Find("Play Again Button").GetComponent<SpriteRenderer>().sprite = null;
     }
 
     /*!
@@ -83,6 +85,7 @@ public class ERS : MonoBehaviour
             }
             difficultySelect = true;
             GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = menuButton;
+            GameObject.Find("Play Again Button").GetComponent<SpriteRenderer>().sprite = playButton;
         }
         if(playerTurn)
         {
@@ -328,10 +331,23 @@ public class ERS : MonoBehaviour
         }
         float xoffset = 0.5f;
         float zoffset = 0.1f;
-        for(int i = 0; i < pile.Count; i++)
+        if(pile.Count > 40)
         {
-            GameObject newCard = Instantiate(cardPrefab, new Vector3(-10f  + (i * xoffset), 0, 0  - (i * zoffset)), Quaternion.identity);
-            newCard.name = pile[i];
+            int counter = 0;
+            for(int i = (pile.Count - 40); i < pile.Count; i++)
+            {
+                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10f  + (counter * xoffset), 0, 0  - (counter * zoffset)), Quaternion.identity);
+                newCard.name = pile[i];
+                counter++;
+            }
+        }
+        else
+        {
+            for(int i = 0; i < pile.Count; i++)
+            {
+                GameObject newCard = Instantiate(cardPrefab, new Vector3(-10f  + (i * xoffset), 0, 0  - (i * zoffset)), Quaternion.identity);
+                newCard.name = pile[i];
+            }
         }
     }
 
