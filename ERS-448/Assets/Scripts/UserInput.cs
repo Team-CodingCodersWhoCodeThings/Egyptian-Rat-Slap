@@ -32,7 +32,7 @@ public class UserInput : MonoBehaviour
         GetMouseClick();
         if (Input.GetKeyDown("space"))
         {
-            clickedButton();
+            ers.slap(ers.PlayerDeck);
         }
     }
 
@@ -54,12 +54,12 @@ public class UserInput : MonoBehaviour
                 if (hit.collider.CompareTag("Deck"))
                 {
                     /// clicked deck.
-                    clickedDeck();
+                    ers.playCard(ers.PlayerDeck);
                 }
                 if (hit.collider.CompareTag("Button"))
                 {
                     /// clicked button.
-                    clickedButton();
+                    ers.slap(ers.PlayerDeck);
                 }
                 if (hit.collider.CompareTag("easy"))
                 {
@@ -85,29 +85,18 @@ public class UserInput : MonoBehaviour
                     GameObject.Find("Medium").GetComponent<SpriteRenderer>().sprite = null;
                     GameObject.Find("Hard").GetComponent<SpriteRenderer>().sprite = null;
                 }
+                if (hit.collider.CompareTag("menu"))
+                {
+                    Application.LoadLevel("MenuScene");
+                }
+                if (hit.collider.CompareTag("play"))
+                {
+                    ers.winRenderer.sprite = null;
+                    ers.difficultySelect = false;
+                    GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = null;
+                    GameObject.Find("Play Again Button").GetComponent<SpriteRenderer>().sprite = null;
+                }
             }
         }
-    }
-
-    /*!
-     \pre mouse clicked.
-     \post if deck clicked, deak card .
-     \return none.
-    */
-
-    void clickedDeck()
-    {
-        ers.playCard(ers.PlayerDeck);
-    }
-
-    /*!
-     \pre mouse clicked.
-     \post resets board.
-     \return none.
-    */
-
-    void clickedButton()
-    {
-        ers.slap(ers.PlayerDeck);
     }
 }
