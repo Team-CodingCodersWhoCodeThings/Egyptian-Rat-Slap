@@ -1,6 +1,6 @@
 /// File Name UserInput.cs.
 /// Assignment EECS 448 Project 3.
-/// Brief Register clicks from user.
+/// Brief Register clicks from user in game.
 
 using System.Collections;
 using System.Collections.Generic;
@@ -23,13 +23,14 @@ public class UserInput : MonoBehaviour
 
     /*!
      \pre game is ran.
-     \post registers mouse click and calls function.
+     \post register mouse click or space press.
      \return none.
     */
 
     void Update()
     {
         GetMouseClick();
+        /// If space is pressed, call slap deck.
         if (Input.GetKeyDown("space"))
         {
             ers.slap(ers.PlayerDeck);
@@ -38,7 +39,7 @@ public class UserInput : MonoBehaviour
 
     /*!
      \pre mouse is clicked.
-     \post check if deck or button is clicked.
+     \post check what is clicked.
      \return none.
     */
 
@@ -53,16 +54,17 @@ public class UserInput : MonoBehaviour
                 /// Check what was hit.
                 if (hit.collider.CompareTag("Deck"))
                 {
-                    /// clicked deck.
+                    /// Clicked deck.
                     ers.playCard(ers.PlayerDeck);
                 }
                 if (hit.collider.CompareTag("Button"))
                 {
-                    /// clicked button.
+                    /// Clicked slap button.
                     ers.slap(ers.PlayerDeck);
                 }
                 if (hit.collider.CompareTag("easy"))
                 {
+                    /// Selected easy difficulty.
                     ers.timings = new int[] {65, 55};
                     ers.difficultySelect = false;
                     GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
@@ -71,6 +73,7 @@ public class UserInput : MonoBehaviour
                 }
                 if (hit.collider.CompareTag("medium"))
                 {
+                    /// Selected medium difficulty.
                     ers.timings = new int[] {50, 40};
                     ers.difficultySelect = false;
                     GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
@@ -79,6 +82,7 @@ public class UserInput : MonoBehaviour
                 }
                 if (hit.collider.CompareTag("hard"))
                 {
+                    /// Selected hard difficulty.
                     ers.timings = new int[] {38, 28};
                     ers.difficultySelect = false;
                     GameObject.Find("Easy").GetComponent<SpriteRenderer>().sprite = null;
@@ -87,10 +91,12 @@ public class UserInput : MonoBehaviour
                 }
                 if (hit.collider.CompareTag("menu"))
                 {
+                    /// Clicked return to menu.
                     Application.LoadLevel("MenuScene");
                 }
                 if (hit.collider.CompareTag("play"))
                 {
+                    /// Clicked play again.
                     ers.winRenderer.sprite = null;
                     ers.difficultySelect = false;
                     GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = null;

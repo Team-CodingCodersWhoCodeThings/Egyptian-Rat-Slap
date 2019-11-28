@@ -41,7 +41,7 @@ public class ERS : MonoBehaviour
 
     void Start()
     {
-        
+        /// Initializes variables.
         timings = new int[] {50, 40};
         difficultySelect = true;
         reactionTimer = 1;
@@ -55,12 +55,13 @@ public class ERS : MonoBehaviour
 
     /*!
      \pre game is ran.
-     \post updates game.
+     \post updates game every frame.
      \return none.
     */
 
     void Update()
     {
+        /// Checks for game end.
         if(((AIDeck.Count == 0) || (PlayerDeck.Count == 0)) && (!isValidSlap()))
         {
             bool playerWin;
@@ -72,6 +73,7 @@ public class ERS : MonoBehaviour
             {
                 playerWin = true;
             }
+            /// Reset the board and display winner message.
             resetBoard();
             if(playerWin)
             {
@@ -87,6 +89,7 @@ public class ERS : MonoBehaviour
             GameObject.Find("Menu Button").GetComponent<SpriteRenderer>().sprite = menuButton;
             GameObject.Find("Play Again Button").GetComponent<SpriteRenderer>().sprite = playButton;
         }
+        /// Updates the turn marker.
         if(playerTurn)
         {
             GameObject.Find("Player Turn").GetComponent<SpriteRenderer>().sprite = turns[0];
@@ -97,12 +100,20 @@ public class ERS : MonoBehaviour
             GameObject.Find("Player Turn").GetComponent<SpriteRenderer>().sprite = null;
             GameObject.Find("AI Turn").GetComponent<SpriteRenderer>().sprite = turns[1];
         }
+        /// Updates deck counts.
         GameObject.Find("Player Deck Count").GetComponent<TextMesh>().text = PlayerDeck.Count.ToString();
         GameObject.Find("AI Deck Count").GetComponent<TextMesh>().text = AIDeck.Count.ToString();
     }
 
+    /*!
+     \pre game is ran.
+     \post updates game every 0.02s.
+     \return none.
+    */
+
     void FixedUpdate()
     {
+        /// Waits and plays card on AI turn.
         if(!playerTurn)
         {
             turnTimer++;
@@ -111,6 +122,7 @@ public class ERS : MonoBehaviour
                 playCard(AIDeck);
             }
         }
+        /// Waits and slaps deck for AI when slap is ready.
         if(isValidSlap())
         {
             slapTimer++;
@@ -119,6 +131,7 @@ public class ERS : MonoBehaviour
                 slap(AIDeck);
             }
         }
+        /// Decrements reaction timer after slaps and countdowns.
         if((reactionTimer > 0) && (!difficultySelect))
         {
             reactionTimer--;
@@ -131,6 +144,7 @@ public class ERS : MonoBehaviour
         {
             countdownTimer--;
         }
+        /// Waits to hand off cards after countdown to allow for slaps.
         if((countdown == 0) && (countdownTimer == 0) && countdownState) 
         {
                 if(!playerTurn)
@@ -193,7 +207,7 @@ public class ERS : MonoBehaviour
     /*!
      \pre game is ran.
      \post creates deck for all suits and values combos.
-     \return none.
+     \return complete list of cards.
     */
 
     public static List<string> GenerateDeck()
@@ -241,12 +255,15 @@ public class ERS : MonoBehaviour
 
     public void playCard(List<string> deck)
     {
+        /// Stops card play until reaction time is up.
         if((reactionTimer > 0) || (countdownState && (countdown == 0)))
         {
             return;
         }
+        /// Only allow slap on correct turn.
         if((deck ==AIDeck) || (playerTurn))
         {
+            /// Play card onto the pile.
             if(deck.Count > 0)
             {
                 pile.Add(deck[deck.Count - 1]);
@@ -254,6 +271,7 @@ public class ERS : MonoBehaviour
                 updatePile();
             }
             turnTimer = 0;
+            /// Initiate countdown on face card play.
             if(pile[pile.Count -1][1] == 'J')
             {
                 playerTurn = !playerTurn;
@@ -278,12 +296,14 @@ public class ERS : MonoBehaviour
                 countdownState = true;
                 countdown = 4;
             }
+            /// If countdown and a non face card is played, decrement countdown variable.
             else if(countdownState)
             {
                 countdown--;
                 countdownTimer = (timings[0] + timings[1]) / 2;
                 
             }
+            /// If no countdown is active or triggered, just flip turn.
             else
             {
                 playerTurn = !playerTurn;
@@ -299,12 +319,14 @@ public class ERS : MonoBehaviour
 
     public void resetBoard()
     {
+        /// Clear all cards from decks and pile.
         pile.Clear();
         updatePile();
         AIDeck.Clear();
         PlayerDeck.Clear();
-        shuffle(deck);//shuffle cards
-        for(int i = 0; i < 52; i++)//divide the deck between AI and Player
+        /// Reshuffle deck and redistribute cards between decks.
+        shuffle(deck);
+        for(int i = 0; i < 52; i++)
         {
             if(i%2 == 0)
             {
@@ -315,6 +337,7 @@ public class ERS : MonoBehaviour
                 PlayerDeck.Add(deck[i]);
             }
         }
+        /// Reset variables for new game.
         playerTurn = true;
         slapTimer = 0;
         turnTimer = 0;
@@ -323,14 +346,22 @@ public class ERS : MonoBehaviour
         countdownTimer = 0;
     }
 
+    /*!
+     \pre pile is changed.
+     \post cards displayed in pile updated.
+     \return none.
+    */
+
     public void updatePile()
     {
+        /// Delete all card objects.
         foreach (string card in deck)
         {
             DestroyImmediate(GameObject.Find(card));
         }
         float xoffset = 0.5f;
         float zoffset = 0.1f;
+        /// Create objects for all cards in pile, only showing last 40 cards.
         if(pile.Count > 40)
         {
             int counter = 0;
@@ -351,16 +382,24 @@ public class ERS : MonoBehaviour
         }
     }
 
+    /*!
+     \pre game is ran.
+     \post pile is checked for slap.
+     \return true if slapable.
+    */
+
     public bool isValidSlap()
     {
         if(pile.Count > 1)
         {
+            /// Double on top of pile detected.
             if(pile[pile.Count - 1][1] == pile[pile.Count - 2][1])
             {
                 return true;
             }
             else if(pile.Count > 2)
             {
+                /// Sandwich on top of pile detected.
                 if(pile[pile.Count - 1][1] == pile[pile.Count - 3][1])
                 {
                     return true;
@@ -381,12 +420,20 @@ public class ERS : MonoBehaviour
         }
     }
 
+    /*!
+     \pre game is ran.
+     \post pile is slapped and cards taken.
+     \return none.
+    */
+
     public void slap(List<string> deck)
     {
+        /// Stop slap if reaction timer is still active.
         if(reactionTimer > 0)
         {
             return;
         }
+        /// If pile is slappable, then give cards, update pile, and display slap win marker.
         if(isValidSlap())
         {
             for(int i = (pile.Count - 1); i >= 0; i--)
@@ -420,6 +467,7 @@ public class ERS : MonoBehaviour
         {
             updatePile();
         }
+        /// Reset AI slap timer.
         slapTimer = 0;
     }
 }

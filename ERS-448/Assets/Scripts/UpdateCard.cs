@@ -24,8 +24,10 @@ public class UpdateCard : MonoBehaviour
         List<string> deck = ERS.GenerateDeck();
         ers = FindObjectOfType<ERS>();
         int pos = 0;
+        /// Loop through all cards.
         foreach (string card in deck)
         {
+            /// If name of object matches card front, use that card front sprite.
             if(this.name == card)
             {
                 cardFront = ers.cardFronts[pos];
@@ -36,12 +38,6 @@ public class UpdateCard : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = cardFront;
     }
-
-    /*!
-     \pre game is ran.
-     \post if card flipped, update sprite.
-     \return none.
-    */
 
     void Update()
     {
