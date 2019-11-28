@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/// File Name MenuInput.cs.
+/// Assignment EECS 448 Project 3.
+/// Brief Register clicks from user in Menus.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +15,13 @@ public class MenuInput : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    /*!
+     \pre game is ran.
+     \post registers mouse click and calls function.
+     \return none.
+    */
+
     void Update()
     {
         GetMouseClick();
@@ -18,7 +29,7 @@ public class MenuInput : MonoBehaviour
 
     /*!
      \pre mouse is clicked.
-     \post check if deck or button is clicked.
+     \post check which menu button is clicked.
      \return none.
     */
 
@@ -33,14 +44,17 @@ public class MenuInput : MonoBehaviour
                 /// Check what was hit.
                 if (hit.collider.CompareTag("menu"))
                 {
+                    /// Clicked return to menu.
                     Application.LoadLevel("MenuScene");
                 }
                 if (hit.collider.CompareTag("game"))
                 {
+                    /// Clicked play game.
                     Application.LoadLevel("GameScene");
                 }
                 if (hit.collider.CompareTag("instructions"))
                 {
+                    /// Clicked instructions.
                     Application.LoadLevel("InstructionScene");
                 }
             }

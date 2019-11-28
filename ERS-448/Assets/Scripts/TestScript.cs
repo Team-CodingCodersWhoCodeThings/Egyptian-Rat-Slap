@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/// File Name TestScript.cs.
+/// Assignment EECS 448 Project 3.
+/// Brief Tests code in console.
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using IngameDebugConsole;
@@ -12,15 +16,23 @@ public class TestScript : MonoBehaviour
         
     }
 
+    /*!
+     \pre test is enterred in console.
+     \post tests code and outputs to console.
+     \return none.
+    */
+
     [ConsoleMethod( "test", "Runs test of game functions" )]
 	public static void ConsoleTest()
 	{
         ers = FindObjectOfType<ERS>();
+        /// Outputs message if difficulty is not selected before testing.
         if(ers.difficultySelect)
         {
             print("Pick any difficulty before running a test");
             return;
         }
+        /// Creates bool and runs through series of tests.
         bool test = true;
         for(int i = 0; i < 26; i++)
         {
