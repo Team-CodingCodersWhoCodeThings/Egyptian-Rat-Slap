@@ -1,0 +1,5 @@
+System.collections
+unityengine
+TextMeshPro - unity technologies
+Pixabay user blickpixel (placeholder card back)
+Opengameart.org user Byron Knoll (placeholder card front)
